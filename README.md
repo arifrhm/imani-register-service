@@ -1,6 +1,6 @@
 # Imani Hacking Register Service API Documentation
 
-**Base URL:** `https://api.example.com/api/auth`
+**Base URL:** `https://imani-register-service.vercel.app/api/auth`
 
 **Authentication:** All requests require a valid JSON Web Token (JWT) in the `Authorization` header. The token should be in the format `Bearer <token>`.
 
