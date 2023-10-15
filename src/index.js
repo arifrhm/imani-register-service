@@ -8,8 +8,12 @@ const app = express();
 // Connect to MongoDB database
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
 
+const jsonParser = bodyParser.json();
+const urlencodedParser = bodyParser.urlencoded({ extended: true });
+
 // Configure body parser
-app.use(bodyParser.json());
+app.use(jsonParser);
+app.use(urlencodedParser);
 
 // Define routes
 app.use('/api/auth', authRoutes);
