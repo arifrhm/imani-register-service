@@ -9,11 +9,9 @@ const app = express();
 mongoose.connect(process.env.DB_URL, { useNewUrlParser: true });
 
 const jsonParser = bodyParser.json();
-const urlencodedParser = bodyParser.urlencoded({ extended: true });
 
 // Configure body parser
 app.use(jsonParser);
-app.use(urlencodedParser);
 
 // Define routes
 app.use('/api/auth', authRoutes);
