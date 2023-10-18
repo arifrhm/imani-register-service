@@ -92,7 +92,7 @@ const login = async (req, res) => {
   }
 
   // Generate JWT
-  const token = jwt.sign({ userId: user._id }, 'secretKey');
+  const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
   // Send login success response with JWT
   res.status(200).json({ token });
@@ -102,9 +102,9 @@ const logout = async (req, res) => {
   try {
     // Extract the JWT from the Authorization header
     const authorizationHeader = req.headers.authorization;
+    console.log(authorizationHeader);
     if (!authorizationHeader) {
-      res.status(401).json({ error: 'Unauthorized' });
-      return;
+      return res.status(401).json({ error: 'Unauthorized' });
     }
 
     const token = authorizationHeader.split(' ')[1];
@@ -112,22 +112,23 @@ const logout = async (req, res) => {
     // Invalidate the JWT
     jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
-        // Handle invalid token
-        res.status(401).json({ error: 'Invalid token' });
-        return;
+        // Handle invalid token and return the response
+        return res.status(401).json({ error: 'Invalid token' });
       }
 
       // Update user's session status to inactive
       const userId = decodedToken.userId;
       await User.findByIdAndUpdate(userId, { sessionStatus: 'inactive' });
-    });
 
-    // Send logout success response
-    res.status(200).json({ message: 'Logged out successfully' });
+      // Send logout success response
+      res.status(200).json({ message: 'Logged out successfully' });
+    });
   } catch (error) {
+    console.log(error);
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 
 module.exports = { register, login, logout };

@@ -4,7 +4,7 @@
   "description": "Register, Login, Logout API for Imani Hacking Page",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node src/index.js",
     "test": "mocha"
   },
   "repository": {
